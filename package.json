@@ -1,0 +1,19 @@
+{
+  "name": "portfolio_sever",
+  "version": "1.0.0",
+  "description": "portfolio Mmodern Web with server for send email",
+  "main": "server.js",
+  "repository": "n",
+  "author": "n",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express.js": "^1.0.0",
+    "nodemailer": "^6.9.3",
+    "nodemon": "^2.0.22"
+  }
+}

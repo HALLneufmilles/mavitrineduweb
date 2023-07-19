@@ -1,0 +1,942 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth; /* permet un scroll automatique souple video : 1h 07mn 50 */
+  scroll-padding-top: 100px; /* On lui dit : arrête le scroll auto à 100px pour tenir compte de la hauteur de la navbar. 
+  ("PROJECTES" appaît en haut et sous la navbar quand on click sur le lein "Projects" de la navbar.) */
+}
+
+body {
+  background-color: #000;
+  font-family: "roboto", sans-serif;
+  overflow-x: hidden;
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100px;
+  padding: 20px 10vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+  transition: 0.4s; /* pour le background noire Voir app.js :
+  window.addEventListener("scroll", () => {
+  // console.log(scrollY); // permet d'affiche la valeur de scroll - vidéo: 1h 08
+  if (scrollY > 195) {
+    navbar.classList.add("bg");
+  } else {
+    navbar.classList.remove("bg");
+  }
+});
+  - vidéo : 1h 09 */
+}
+
+nav.bg {
+  /* Voir vidéo : 1h 09 */
+  background-color: #000;
+}
+
+.toggle-btn {
+  display: none;
+}
+
+.logo {
+  height: 65px;
+  border-radius: 50%;
+}
+
+.links-container {
+  display: flex;
+  list-style: none;
+  gap: 10px;
+}
+
+.links {
+  color: #fff;
+  text-decoration: none;
+  text-transform: capitalize;
+  padding: 10px 20px;
+  transition: 0.5s;
+  font-size: 1.4rem;
+}
+
+.links:hover {
+  opacity: 0.5;
+}
+
+/* hero-section */
+#hero-section {
+  position: relative;
+  /* width: auto; */
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+#hero-section canvas {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  z-index: -3;
+  cursor: move;
+}
+
+.hero-content {
+  position: relative;
+  z-index: -2;
+}
+
+.hero-headline {
+  font-family: "sahitya", serif;
+  font-size: 4.5rem;
+  text-align: center;
+  transition: 0.5s;
+}
+
+.hero-secondary-line {
+  text-align: center;
+  margin: 25px 0 50px;
+  font-size: 1.2rem;
+}
+
+.btn {
+  padding: 15px 30px;
+  width: fit-content; /*(pas utile pur moi : explication : https://css-tricks.com/almanac/properties/w/width/#:~:text=the%20fit-content%20value*/
+  background-color: #000;
+  color: #fff;
+  text-decoration: none;
+  text-transform: capitalize;
+  display: block; /*pour faire fonctionner 'margin:auto' */
+  margin: auto;
+}
+
+.btn.light {
+  background-color: #fff;
+  color: #000;
+}
+
+.btn.transparent {
+  background: transparent;
+  border: 2px solid;
+}
+
+.btn.transparent.btn-translate {
+  padding: 10px 10px;
+}
+
+section {
+  padding: 60px 10vw;
+}
+
+.section-title {
+  text-align: center;
+  color: #fff;
+  font-size: 2.4rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  position: relative;
+}
+
+.section-title::before {
+  /* content: "works"; */
+  content: attr(data-text);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4.5rem;
+  font-weight: 900;
+  opacity: 0.1;
+  z-index: -1;
+}
+
+.section-info {
+  text-align: center;
+  /**/
+  width: 50%;
+  min-width: 300px;
+  /* width: fit-content; */
+  /**/
+  color: #fff;
+  opacity: 0.5;
+  margin: 3.5rem auto;
+  font-size: 1.1rem;
+  line-height: 1.8rem;
+}
+
+/* Filters */
+.filters {
+  margin: 100px 0 50px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 15px 30px;
+  font-size: 1rem;
+  border: none;
+  color: #fff;
+  background: transparent;
+  text-transform: capitalize;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+  color: #000;
+  background-color: #fff;
+}
+
+.project-gallery {
+  margin-top: 80px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+  position: relative;
+  /* transition: height 0.5s ease-in-out; */
+  /* background-color: blue; */
+}
+
+.project-card {
+  position: relative;
+  height: 200px; /*https://chat.openai.com/?model=gpt-4*/
+  transition: 1s;
+} /*malgré 'heigth:200' les cellules séfondre tant qu'il n'y à pas de contenu dimensionné */
+/* le fait de fixer la hauteur et non la largeur est pour garder la souplesse responsive en largeur */
+
+.project-card.active {
+  border: 10px solid #fff;
+}
+
+.project-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* https://www.w3schools.com/css/css3_object-fit.asp*/
+  transition: 0.5s;
+}
+
+.tags {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  color: #ffffff;
+  width: 90%;
+  transition: 0.5s;
+  opacity: 0;
+  /* text-shadow: black 0.1em 0.1em 0.1em; */
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.project-card:hover:not(.active) .tags {
+  opacity: 1;
+}
+
+.project-card:hover:not(.active) .project-img {
+  transform: scale(1.15);
+  /* opacity: 0.6; */
+}
+
+#project-info {
+  margin-top: 100px;
+  position: relative;
+  display: grid;
+  /* grid-template-columns: repeat(2, 1fr); */
+  grid-template-columns: 1.5fr 1fr;
+  gap: 40px;
+}
+
+/* .project-details {
+  overflow: hidden;
+} */
+/* lorsqu'on ajoute 'overflow: hidden;' la photo prend la largeur d'une colonne grid. 
+  le probleme peu se résoudre en ajoutant 'max-width: 100%;' à l'élément <img> */
+.image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover; /* https://www.w3schools.com/css/css3_object-fit.asp */
+}
+
+.videoContainer {
+  display: none;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+  overflow: hidden;
+  position: relative;
+}
+
+.videoContainer iframe {
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.name {
+  color: #fff;
+  margin: 30px 0;
+  font-weight: 300;
+  font-size: 2rem;
+  text-transform: capitalize;
+}
+
+.details {
+  color: #fff;
+  opacity: 0.5;
+  font-size: 1.1rem;
+  line-height: 1.8rem;
+  margin-bottom: 40px;
+}
+
+.btn-grps {
+  display: flex;
+  gap: 20px;
+}
+
+.btn-grps .btn {
+  margin: 9px;
+}
+
+.cl-card {
+  margin-bottom: 10px;
+  display: none;
+}
+
+.language {
+  display: flex;
+  gap: 10px;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.language .name {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.progress-track {
+  width: 100%;
+  height: 5px;
+  border-radius: 10px;
+  margin: 30px 0 20px;
+  background-color: #1a1a1a;
+  /* overflow: hidden; */
+}
+
+.progress {
+  width: 50%;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 10px;
+  transition: 1s;
+}
+
+/*About-section*/
+.about-me-container {
+  margin-top: 100px;
+  display: flex;
+  gap: 75px;
+}
+
+.about-image-container {
+  width: 50%;
+  height: 600px;
+  position: relative;
+}
+
+.about-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.download-btn {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.5;
+  color: #fff;
+}
+
+.personal-info {
+  color: #fff;
+}
+
+.title {
+  text-align: center;
+  color: #fff;
+  text-transform: capitalize;
+  font-size: 2rem;
+  font-weight: 300;
+  margin-bottom: 40px;
+}
+
+.personal-info .title {
+  text-align: left;
+}
+
+.personal-info p {
+  margin: 30px 0;
+  font-size: 1.1rem;
+}
+
+.personal-info p span {
+  opacity: 0.5;
+}
+
+.personal-info p .link-me {
+  text-decoration: underline;
+  color: #fff;
+  padding-left: 5px;
+}
+
+.social-links {
+  color: #fff;
+  font-size: 2rem;
+  margin-right: 20px;
+  pointer-events: none;
+  cursor: default;
+}
+
+.skills {
+  /* position: relative; */
+  margin: 100px 0;
+}
+
+.skills-container {
+  margin: 100px 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 50px;
+}
+
+.skill-card {
+  width: 150px;
+  height: 200px;
+  background-color: #1a1a1a;
+  padding: 20px;
+  position: relative;
+  /* overflow: hidden; */
+  transition: 0.5s;
+}
+
+.skill-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  display: block;
+  margin: auto;
+  transition: 0.5s;
+}
+
+.skill-name {
+  position: absolute;
+  color: #fff;
+  font-size: 1.2rem;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+  transition: 0.5s;
+  border-top: 5px solid #000;
+}
+
+.skill-card::after,
+.skill-card::before {
+  content: "";
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-color: #000;
+  z-index: 2;
+  transform: rotate(45deg);
+}
+
+.skill-card::before {
+  bottom: -20px;
+  left: -20px;
+}
+.skill-card::after {
+  bottom: -20px;
+  right: -20px;
+}
+
+.skill-card:hover {
+  background-color: #000;
+}
+
+.skill-card:nth-child(1):hover .skill-name {
+  /* :nth-child va cibler les listes d'éléments ayant la classe 'skill-card' (à partir de 2). Il faut donc qu'ils aient le même parent. En ce qui nous concerne nous n'avons qu'une seule liste. :nth-child(1) cible le premier élément de la liste. https://chat.openai.com/?model=gpt-4*/
+  background-color: #ff5722;
+}
+
+.skill-card:nth-child(2):hover .skill-name {
+  background: #2196f3;
+}
+
+.skill-card:nth-child(3):hover .skill-name {
+  background: #f7df1e;
+}
+
+.skill-card:nth-child(4):hover .skill-name {
+  background: #61dafb;
+}
+
+.skill-card:nth-child(5):hover .skill-name {
+  background: #83cd29;
+}
+
+.skill-card:nth-child(6):hover .skill-name {
+  background: #4353ff;
+}
+
+.skill-card:nth-child(7):hover .skill-name {
+  background: #f58411;
+}
+
+.skill-card:nth-child(8):hover .skill-name {
+  background: #042738;
+}
+
+.skill-card:nth-child(9):hover .skill-name {
+  background: #ffffff;
+  color: #000;
+}
+
+.skill-card:nth-child(10):hover .skill-name {
+  background: #6a72dd;
+}
+
+.skill-card:hover .skill-image {
+  transform: scale(1.1) translateY(-10px);
+}
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 100px 0;
+}
+
+.img-certif {
+  width: 400px;
+  height: 400px;
+  background-color: #1a1a1a;
+  padding: 20px;
+  /* position: relative; */
+  overflow: hidden;
+  /* transition: 0.5s; */
+  cursor: pointer;
+}
+
+.fullscreen {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+  z-index: 9999;
+}
+
+.contact-form {
+  width: 75%;
+  margin: auto;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 20px;
+  background-color: #1a1a1a;
+  color: #fff;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.name-email-inputs {
+  display: flex;
+  gap: 20px;
+}
+
+textarea {
+  font-family: "roboto", sans-serif;
+  resize: none;
+  height: 300px;
+}
+
+.contact-form .btn {
+  margin: 20px 0 20px;
+  border: none;
+}
+
+#submit-btn:hover {
+  cursor: pointer;
+}
+
+/******* MEDIA QUERY ********/
+/******* MEDIA QUERY ********/
+/******* MEDIA QUERY ********/
+
+@media screen and (max-width: 1200px) {
+  html {
+    font-size: 15px;
+  }
+
+  .project-gallery {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .project-card {
+    height: 175px;
+  }
+
+  .about-image-container {
+    /* width: 50%; */
+    height: 500px;
+  }
+}
+
+/*************************************/
+
+@media screen and (max-width: 992px) {
+  .hero-headline {
+    font-size: 3.5rem;
+  }
+
+  section {
+    padding: 30px 2vw;
+  }
+
+  .filter-btn {
+    padding: 10px 15px;
+  }
+
+  .project-gallery {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .project-card {
+    height: 150px;
+  }
+
+  #project-info {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  /* .cl-card {
+    display: none;
+  }
+
+  .cl-card:nth-child(1),
+  .cl-card:nth-child(2),
+  .cl-card:nth-child(3) {
+    display: block;
+  }
+
+  .cl-card:nth-child(3)::after {
+    content: "** Few more are hidden **";
+    color: #fff;
+    opacity: 0.5;
+  } */
+
+  .about-me-container {
+    margin-top: 75px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .about-image-container {
+    width: 100%;
+    min-width: 300px;
+    height: 500px;
+  }
+
+  .about-image {
+    /* déforme l'image pour l'adapter au cadre*/
+    /* object-fit: fill; */
+    /* image entière(ratito réel / taille plus petite en px) dans le cadre */
+    object-fit: contain;
+    /* s'étendra en dehors du cadre sans déformation pour occuper tout l'espace */
+    /* object-fit: cover; */
+    /* l'image garde sa taille réelle en px et sera rognée par le cadre */
+    /* object-fit: none; */
+    /* taille d'image la plus petite entre "contain" et "none" */
+    /* object-fit: scale-down; */
+  }
+
+  .contact-form {
+    width: 100%;
+  }
+
+  .img-certif {
+    width: 300px;
+    height: 300px;
+    padding: 15px;
+  }
+  .fullscreen {
+    width: 80%;
+    height: 80%;
+  }
+}
+
+/*************************************/
+
+@media screen and (max-width: 735px) {
+  /* Bouton menu mobile */
+  nav {
+    /* background-color: #000; */
+    height: 60px;
+    padding: 10px 15px;
+  }
+
+  nav::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background-color: rgba(0, 0, 0, 0.5); /* 50% d'opacité */
+    z-index: -1;
+    /* Voir CPT: transparence */
+  }
+
+  .logo {
+    height: 50px;
+  }
+
+  section {
+    padding: 20px 5vw;
+  }
+
+  .hero-headline {
+    font-size: 2.8rem;
+  }
+  .toggle-btn {
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+    border-radius: 2px;
+    position: relative;
+    cursor: pointer;
+    padding: 5px 0;
+    /* background-color: #f00; */
+  }
+
+  /* Traits horisontales du btn menu mobile */
+
+  .toggle-btn span {
+    position: absolute;
+    width: 80%;
+    height: 2px;
+    background: #fff;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: 0.5s;
+  }
+
+  .toggle-btn span:nth-child(1) {
+    top: 30%;
+  }
+
+  .toggle-btn span:nth-child(3) {
+    top: 70%;
+  }
+
+  /* transformation des 3 traits en croix */
+
+  .toggle-btn.active span:nth-child(1) {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  .toggle-btn.active span:nth-child(2) {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+  .toggle-btn.active span:nth-child(3) {
+    opacity: 0;
+  }
+
+  /* links */
+
+  .links-container {
+    flex-direction: column;
+    position: absolute;
+    width: 35%;
+    top: 60px;
+    left: 0;
+    gap: 0;
+    pointer-events: none;
+    opacity: 0;
+
+    /* z-index: 1; */
+  }
+
+  .links-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* 50% d'opacité */
+    z-index: -1;
+  }
+
+  .links-container.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .links {
+    display: block;
+    width: 100%;
+    padding: 20px 10vw;
+
+    /* background: #000; */
+    /* background-color: rgba(0, 0, 0, 0.5); */
+  }
+
+  .links:hover {
+    background: #1a1a1a;
+    opacity: 1;
+  }
+
+  /* Project section */
+
+  .project-gallery {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .skill-card {
+    width: 120px;
+    height: 190px;
+    padding: 10px 0;
+  }
+
+  .skill-image {
+    width: 70px;
+    object-fit: contain;
+  }
+
+  .skill-name {
+    font-size: 1rem;
+  }
+
+  .img-certif {
+    width: 200px;
+    height: 200px;
+    padding: 10px;
+  }
+
+  .fullscreen {
+    width: 80%;
+    height: 80%;
+  }
+}
+
+/*************************************/
+
+@media screen and (max-width: 500px) {
+  /* hero section */
+  .hero-headline {
+    font-size: 2rem;
+  }
+
+  section {
+    padding: 10px 2vw;
+  }
+
+  .hero-secondary-line {
+    font-size: 1rem;
+    line-height: 2rem;
+    display: block;
+    width: 80%;
+    margin: 25px auto 50px;
+  }
+
+  .btn {
+    padding: 10px 25px;
+    font-size: 0.9rem;
+  }
+
+  /* Project Gallery */
+
+  .project-gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about-me-container {
+    margin-top: 50px;
+    gap: 30px;
+  }
+
+  .section-info {
+    width: 80%;
+    margin: 2rem auto;
+    font-size: 0.9rem;
+    line-height: 1.5rem;
+  }
+
+  .skills {
+    margin: 50px 0;
+  }
+
+  .skills-container {
+    margin: 50px 0;
+  }
+
+  .flex-container {
+    margin: 50px 0;
+  }
+
+  /* contact section */
+  .name-email-inputs {
+    flex-direction: column;
+  }
+  /* :nth-child, cible les listes d'input contenu dans le même parent.
+c'est le cas dans la div.name-email-inputs puisqu'il y en à 2
+ce qui consitue une liste. :nth-child(1) cible le 1er 'input'
+de la liste. */
+  input:nth-child(1) {
+    margin-bottom: 0;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  section {
+    padding: 0px 2vw;
+  }
+
+  .download-btn {
+    bottom: 20%;
+  }
+}
