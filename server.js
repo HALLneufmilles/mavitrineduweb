@@ -15,14 +15,14 @@ app.post("/message", (req, res) => {
     host: "smtp.gmail.com",
     port: 587, // 587 -> TLS & 465 -> SSL
     auth: {
-      user: process.env.REMAIL, // email de votre votre compte google
+      user: process.env.EMAIL, // email de votre votre compte google
       pass: process.env.PASSWORD, // password de votre compte google
     },
   });
   // chatgpt: Dans l'objet mail, vous avez défini from: email, ce qui signifie que l'email de l'expéditeur sera l'email fourni dans le corps de la demande. Gmail ignore cependant cette option et utilise toujours l'adresse e-mail du compte authentifié comme adresse d'expédition.
   let mail = {
     from: email, // sender email
-    to: process.env.REMAIL, //recipient email
+    to: process.env.EMAIL, //recipient email
     subject: subject,
     text: message,
     // on peut remplacer l'attribut `text`par `html`si on veut que le cors de notre email supporte le HTML
