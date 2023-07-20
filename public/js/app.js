@@ -228,7 +228,7 @@ toggleBtn.addEventListener("click", () => {
 // Envoyer email
 
 const sendEmailBtn = document.querySelector("#submit-btn");
-sendEmailBtn.addEventListener("click", () => {
+sendEmailBtn.addEventListener("click", (event) => {
   event.preventDefault();
 
   let message = getMessage();
@@ -246,11 +246,10 @@ sendEmailBtn.addEventListener("click", () => {
   })
     .then((res) => res.json())
     .then((data) => {
-      //console.log(data);
-      // alert(data.alert);
-      // window.location.reload();
-      window.location.href = "http://localhost:3000/";
-      // consol e.log(data.alert);
+      console.log(data);
+      alert(data.alert);
+      window.location.reload();
+      // window.location.href = "http://localhost:3000/";
     });
 });
 
