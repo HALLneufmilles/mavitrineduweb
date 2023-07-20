@@ -28,8 +28,8 @@ let projects = [
     about: "My portfolio website is a dynamic showcase of my major accomplishments. It opens with an auto-rotating 3D model integrated using Three.js, offering interactive manipulation with the mouse. Project thumbnails presented can be filtered by associated technology tags and provide more project details when clicked. The site includes a contact form at the bottom of the page, providing a straightforward way for visitors to contact me by email. This portfolio highlights my ability to create interactive and engaging digital experiences, while ensuring usability and functionality.",
     aboutf: "Mon site portfolio est une vitrine dynamique de mes réalisations majeures. Il s&amp;#39;ouvre sur un modèle 3D en rotation automatique intégré à l&amp;#39;aide de Three.js, offrant une manipulation interactive avec la souris. Les vignettes de projets présentées peuvent être filtrées par des tags de technologie associés et fournissent plus de détails sur le projet lorsqu&amp;#39;elles sont cliquées. Le site comprend un formulaire de contact en bas de la page, offrant un moyen simple pour les visiteurs de me contacter par e-mail. Ce portfolio met en évidence ma capacité à créer des expériences numériques interactives et engageantes, tout en assurant la convivialité et la fonctionnalité.",
     tags: "My Portfolio",
-    live: "https://www.project-url.com",
-    github: "https://www.github.com/github-repo-name",
+    live: "https://mavitrineduweb.onrender.com/",
+    github: "https://github.com/HALLneufmilles/mavitrineduweb/tree/main",
     image: "img/portfolio.jpg",
     video: "https://www.youtube.com/embed/IhQ3W783zIQ?rel=0",
     languages: {
