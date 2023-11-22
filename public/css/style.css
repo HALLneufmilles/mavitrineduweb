@@ -88,13 +88,13 @@ nav.bg {
 
   top: 0;
   left: 0;
-  z-index: -3;
+  /* z-index: -3; */
   cursor: move;
 }
 
 .hero-content {
   position: relative;
-  z-index: -2;
+  z-index: 1;
 }
 
 .hero-headline {
