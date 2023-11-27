@@ -244,7 +244,7 @@ sendEmailBtn.addEventListener("click", (event) => {
       hisname: message.hisName,
       email: message.hisEmail,
       subject: message.subject,
-      message: message.texte,
+      message: message.message,
     }),
   })
     .then((res) => {
@@ -278,14 +278,14 @@ const getMessage = () => {
   let hisEmail = document.querySelector("#email").value;
   //console.log(hisName);
   let subject = document.querySelector("#subject").value;
-  let texte = document.querySelector("#message").value;
-  if (!hisName.length || !hisEmail.length || !subject.length || !texte) {
+  let message = document.querySelector("#message").value;
+  if (!hisName.length || !hisEmail.length || !subject.length || !message) {
     alert("fill all the inputs first");
   } else if (!validateEmail(hisEmail)) {
     alert("Your email adress is not valide");
   } else {
     //console.log(hisEmail);
     //console.log(hisName);
-    return { hisName, hisEmail, subject, texte };
+    return { hisName, hisEmail, subject, message };
   }
 };
