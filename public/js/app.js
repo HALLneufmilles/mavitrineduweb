@@ -152,12 +152,12 @@ filters.map((btn, i) => {
   btn.addEventListener("click", () => {
     // Enlever la classe 'active' de toutes les cartes
     projectCards.map((project) => project.classList.remove("active"));
-
+    // Enlever la classe 'active' de toutes les btn
     filters.map((item) => item.classList.remove("active"));
-    btn.classList.add("active");
+    btn.classList.add("active"); // ajout de la classe active au btn cliqué
 
-    let tag = btn.getAttribute("data-filter-value");
-    let firstShown = true;
+    let tag = btn.getAttribute("data-filter-value"); // on prélève le tag du btn cliqué
+    let firstShown = true; // voir lien ChatGPT dans 'readme.md'
 
     projectCards.map((project, i) => {
       if (tag == "all") {
@@ -166,18 +166,18 @@ filters.map((btn, i) => {
         // Ajouter la classe 'active' à la première carte affichée:
         // Pour la première carte, comme firstShown est true, le code entre dans le bloc if, ajoute la classe 'active' à la carte de projet actuelle et appelle setUpProjectInfo() pour cette carte. Ensuite, il définit firstShown à false. Donc pour les autres cartes firstShown sera à false et la classe active ne sera pas appliquée.
         if (firstShown) {
-          project.classList.add("active");
-          setUpProjectInfo(projects[i]);
+          project.classList.add("active"); // on ajoute la classe 'active' à lélément du DOM correspondant à la première carte.
+          setUpProjectInfo(projects[i]); // 'projects' est le tableau d'objets des projets dans 'projects.js'
           firstShown = false;
         }
 
         // Même chose pour les cartes sélectionnées !! :
       } else if (!project.getAttribute("data-tags").includes(tag)) {
-        project.style.display = "none";
+        // 'data-tags' est défini en bas de 'projects.js' par un objet contenant les languages de code.
+        project.style.display = "none"; // dans ce cas on affiche pas les cartes
       } else {
-        project.style.display = null;
-
-        // Ajouter la classe 'active' à la première carte affichée de la sélection:
+        project.style.display = null; // sinon pas de tag, donc aucun btn cliqué, on affiche toutes les cartes
+        // Et on Ajouter la classe 'active' à la première carte:
         if (firstShown) {
           project.classList.add("active");
           setUpProjectInfo(projects[i]);
@@ -188,8 +188,11 @@ filters.map((btn, i) => {
   });
 });
 
+// projectCards[0].classList.add("active");
+// setUpProjectInfo(projects[0]);
 projectCards[0].classList.add("active");
-setUpProjectInfo(projects[0]);
+const data = JSON.parse(projectCards[0].getAttribute("data-info")); // voir lien ChatGPT dans 'readme.md'
+setUpProjectInfo(data);
 // ********************************************
 
 // navbar background

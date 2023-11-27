@@ -19,12 +19,19 @@ app.post("/message", (req, res) => {
       pass: process.env.PASSWORD, // password de votre compte google
     },
   });
-  // chatgpt: Dans l'objet mail, vous avez défini from: email, ce qui signifie que l'email de l'expéditeur sera l'email fourni dans le corps de la demande. Gmail ignore cependant cette option et utilise toujours l'adresse e-mail du compte authentifié comme adresse d'expédition.
+  // chatgpt: https://chat.openai.com/share/22aee45f-4000-4d4c-b838-e5daec60d65e
+  let fullMessage = `
+    <p>Message de : ${hisname}</p>
+    <p>Email: ${email}</p>
+    <p>Message: <br/>${message}</p>
+`;
+  console.log("fullMessage:", fullMessage);
   let mail = {
-    from: email, // sender email
+    from: process.env.EMAIL,
+    replyTo: email, // sender email
     to: process.env.EMAIL, //recipient email
     subject: subject,
-    text: message,
+    html: fullMessage,
     // on peut remplacer l'attribut `text`par `html`si on veut que le cors de notre email supporte le HTML
     // html:  '<h1>This email use html</h1>'
   };
@@ -35,7 +42,7 @@ app.post("/message", (req, res) => {
       res.json({ alert: "Opps! it seems like some err occured. Try again." });
     } else {
       console.log("Email: " + info.response);
-      console.log(mail);
+      console.log("email :", mail);
 
       res.json({ alert: "Your email has been sent", mail });
     }
