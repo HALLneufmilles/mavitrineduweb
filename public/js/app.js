@@ -247,12 +247,23 @@ sendEmailBtn.addEventListener("click", (event) => {
       message: message.message,
     }),
   })
-    .then((res) => res.json())
+    .then((res) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return res.json();
+    })
     .then((data) => {
       console.log(data);
       alert(data.alert);
       window.location.reload();
       // window.location.href = "http://localhost:3000/";
+    })
+    .catch((error) => {
+      console.error(
+        "There has been a problem with your fetch operation:",
+        error
+      );
     });
 });
 
