@@ -715,7 +715,9 @@ textarea {
     height: 60px;
     padding: 10px 15px;
   }
-
+  /* Voir CPT: transparence : https://chat.openai.com/share/f97be086-62c6-44e7-928c-de582a0cea4b*/
+  /* 50% d'opacité */
+  /* backdrop-filter: https://chat.openai.com/share/082e8c16-dc51-4b16-9377-fd8aa2e2f1a7*/
   nav::before {
     content: "";
     position: fixed;
@@ -723,9 +725,9 @@ textarea {
     left: 0;
     right: 0;
     height: 60px;
-    background-color: rgba(0, 0, 0, 0.5); /* 50% d'opacité */
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: -1;
-    /* Voir CPT: transparence */
+    backdrop-filter: blur(2px); /* Ajoute un flou de 10px */
   }
 
   .logo {
@@ -799,7 +801,7 @@ textarea {
 
     /* z-index: 1; */
   }
-
+  /* backdrop-filter: https://chat.openai.com/share/082e8c16-dc51-4b16-9377-fd8aa2e2f1a7*/
   .links-container::before {
     content: "";
     position: absolute;
@@ -809,6 +811,7 @@ textarea {
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.5); /* 50% d'opacité */
     z-index: -1;
+    backdrop-filter: blur(2px); /* Ajoute un flou de 10px */
   }
 
   .links-container.active {
